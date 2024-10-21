@@ -1,6 +1,10 @@
 package oauth
 
-import "github.com/markbates/goth"
+import (
+	"fmt"
+
+	"github.com/markbates/goth"
+)
 
 // Provider represents an OAuth provider
 type Provider string
@@ -73,7 +77,7 @@ const (
 type ProviderKeyValues map[string]string
 
 // ProviderConfigMap is a map of providers to configuration key values.
-type ProviderConfigMap map[string]ProviderKeyValues
+type ProviderConfigMap map[Provider]ProviderKeyValues
 
 // NewProviderConfigMap creates a new provider configuration map.
 func NewProviderConfigMap() ProviderConfigMap {
@@ -81,24 +85,31 @@ func NewProviderConfigMap() ProviderConfigMap {
 }
 
 // Set sets the ProviderKeyValues for the given provider name.
-func (pc ProviderConfigMap) Set(providerName string, keyValues ...string) {
-	pc[providerName] = newProviderKeyValues(keyValues...)
+func (pc ProviderConfigMap) Set(provider Provider, keyValues ...string) error {
+	kvs, err := newProviderKeyValues(keyValues...)
+	if err != nil {
+		return fmt.Errorf("failed to set provider %s: %w", provider, err)
+	}
+	pc[provider] = kvs
+	return nil
 }
 
 // Get returns the ProviderKeyValues for the given provider name.
-func (pc ProviderConfigMap) Get(providerName string) ProviderKeyValues {
-	return pc[providerName]
+func (pc ProviderConfigMap) Get(provider Provider) ProviderKeyValues {
+	return pc[provider]
 }
 
 // newProviderKeyValues creates a new provider configuration key values.
-func newProviderKeyValues(keyValues ...string) ProviderKeyValues {
+func newProviderKeyValues(keyValues ...string) (ProviderKeyValues, error) {
+	if len(keyValues)%2 != 0 {
+		lastKey := keyValues[len(keyValues)-1]
+		return nil, fmt.Errorf("missing value for key: %s", lastKey)
+	}
 	keyValueMap := make(ProviderKeyValues)
 	for i := 0; i < len(keyValues); i += 2 {
-		if i+1 < len(keyValues) {
-			keyValueMap[keyValues[i]] = keyValues[i+1]
-		}
+		keyValueMap[keyValues[i]] = keyValues[i+1]
 	}
-	return keyValueMap
+	return keyValueMap, nil
 }
 
 // SetProviders sets the goth oauth providers.

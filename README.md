@@ -32,8 +32,8 @@ import "github.com/agentstation/oauth"
 - [type Provider](<#Provider>)
 - [type ProviderConfigMap](<#ProviderConfigMap>)
   - [func NewProviderConfigMap\(\) ProviderConfigMap](<#NewProviderConfigMap>)
-  - [func \(pc ProviderConfigMap\) Get\(providerName string\) ProviderKeyValues](<#ProviderConfigMap.Get>)
-  - [func \(pc ProviderConfigMap\) Set\(providerName string, keyValues ...string\)](<#ProviderConfigMap.Set>)
+  - [func \(pc ProviderConfigMap\) Get\(provider Provider\) ProviderKeyValues](<#ProviderConfigMap.Get>)
+  - [func \(pc ProviderConfigMap\) Set\(provider Provider, keyValues ...string\) error](<#ProviderConfigMap.Set>)
 - [type ProviderKeyValues](<#ProviderKeyValues>)
 - [type User](<#User>)
   - [func Complete\(e echo.Context, opts ...Options\) \(User, error\)](<#Complete>)
@@ -92,7 +92,7 @@ func ProviderURL(e echo.Context, opts ...Options) (string, error)
 ProviderURL returns the authentication URL for the specified provider.
 
 <a name="SetProviders"></a>
-## func [SetProviders](<https://github.com/agentstation/oauth/blob/master/providers.go#L107>)
+## func [SetProviders](<https://github.com/agentstation/oauth/blob/master/providers.go#L118>)
 
 ```go
 func SetProviders(providers ...goth.Provider)
@@ -157,7 +157,7 @@ func WithLogger(logger *log.Logger) Options
 WithLogger sets the logger for the oauth package.
 
 <a name="Provider"></a>
-## type [Provider](<https://github.com/agentstation/oauth/blob/master/providers.go#L6>)
+## type [Provider](<https://github.com/agentstation/oauth/blob/master/providers.go#L10>)
 
 Provider represents an OAuth provider
 
@@ -233,16 +233,16 @@ const (
 ```
 
 <a name="ProviderConfigMap"></a>
-## type [ProviderConfigMap](<https://github.com/agentstation/oauth/blob/master/providers.go#L76>)
+## type [ProviderConfigMap](<https://github.com/agentstation/oauth/blob/master/providers.go#L80>)
 
 ProviderConfigMap is a map of providers to configuration key values.
 
 ```go
-type ProviderConfigMap map[string]ProviderKeyValues
+type ProviderConfigMap map[Provider]ProviderKeyValues
 ```
 
 <a name="NewProviderConfigMap"></a>
-### func [NewProviderConfigMap](<https://github.com/agentstation/oauth/blob/master/providers.go#L79>)
+### func [NewProviderConfigMap](<https://github.com/agentstation/oauth/blob/master/providers.go#L83>)
 
 ```go
 func NewProviderConfigMap() ProviderConfigMap
@@ -251,25 +251,25 @@ func NewProviderConfigMap() ProviderConfigMap
 NewProviderConfigMap creates a new provider configuration map.
 
 <a name="ProviderConfigMap.Get"></a>
-### func \(ProviderConfigMap\) [Get](<https://github.com/agentstation/oauth/blob/master/providers.go#L89>)
+### func \(ProviderConfigMap\) [Get](<https://github.com/agentstation/oauth/blob/master/providers.go#L98>)
 
 ```go
-func (pc ProviderConfigMap) Get(providerName string) ProviderKeyValues
+func (pc ProviderConfigMap) Get(provider Provider) ProviderKeyValues
 ```
 
 Get returns the ProviderKeyValues for the given provider name.
 
 <a name="ProviderConfigMap.Set"></a>
-### func \(ProviderConfigMap\) [Set](<https://github.com/agentstation/oauth/blob/master/providers.go#L84>)
+### func \(ProviderConfigMap\) [Set](<https://github.com/agentstation/oauth/blob/master/providers.go#L88>)
 
 ```go
-func (pc ProviderConfigMap) Set(providerName string, keyValues ...string)
+func (pc ProviderConfigMap) Set(provider Provider, keyValues ...string) error
 ```
 
 Set sets the ProviderKeyValues for the given provider name.
 
 <a name="ProviderKeyValues"></a>
-## type [ProviderKeyValues](<https://github.com/agentstation/oauth/blob/master/providers.go#L73>)
+## type [ProviderKeyValues](<https://github.com/agentstation/oauth/blob/master/providers.go#L77>)
 
 ProviderKeyValues is the configuration for a goth oauth provider.
 
