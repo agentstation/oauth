@@ -14,25 +14,25 @@ func SetProviders(providers ...goth.Provider) {
 // ProviderKeyValues is the configuration for a goth oauth provider.
 type ProviderKeyValues map[string]string
 
-// ProviderConfig is a map of provider configurations.
-type ProviderConfig map[string]ProviderKeyValues
+// ProviderConfigMap is a map of providers to configuration key values.
+type ProviderConfigMap map[string]ProviderKeyValues
 
-// NewProviderConfig creates a new provider configuration.
-func NewProviderConfig() ProviderConfig {
-	return make(ProviderConfig)
+// NewProviderConfigMap creates a new provider configuration map.
+func NewProviderConfigMap() ProviderConfigMap {
+	return make(ProviderConfigMap)
 }
 
 // Set sets the ProviderKeyValues for the given provider name.
-func (pc ProviderConfig) Set(providerName string, keyValues ...string) {
+func (pc ProviderConfigMap) Set(providerName string, keyValues ...string) {
 	pc[providerName] = newProviderKeyValues(keyValues...)
 }
 
 // Get returns the ProviderKeyValues for the given provider name.
-func (pc ProviderConfig) Get(providerName string) ProviderKeyValues {
+func (pc ProviderConfigMap) Get(providerName string) ProviderKeyValues {
 	return pc[providerName]
 }
 
-// newProviderKeyValues creates a new provider configuration.
+// newProviderKeyValues creates a new provider configuration key values.
 func newProviderKeyValues(keyValues ...string) ProviderKeyValues {
 	keyValueMap := make(ProviderKeyValues)
 	for i := 0; i < len(keyValues); i += 2 {

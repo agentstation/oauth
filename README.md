@@ -29,10 +29,10 @@ import "github.com/agentstation/oauth"
 - [type Options](<#Options>)
   - [func WithDebug\(\) Options](<#WithDebug>)
   - [func WithLogger\(logger \*log.Logger\) Options](<#WithLogger>)
-- [type ProviderConfig](<#ProviderConfig>)
-  - [func NewProviderConfig\(\) ProviderConfig](<#NewProviderConfig>)
-  - [func \(pc ProviderConfig\) Get\(providerName string\) ProviderKeyValues](<#ProviderConfig.Get>)
-  - [func \(pc ProviderConfig\) Set\(providerName string, keyValues ...string\)](<#ProviderConfig.Set>)
+- [type ProviderConfigMap](<#ProviderConfigMap>)
+  - [func NewProviderConfigMap\(\) ProviderConfigMap](<#NewProviderConfigMap>)
+  - [func \(pc ProviderConfigMap\) Get\(providerName string\) ProviderKeyValues](<#ProviderConfigMap.Get>)
+  - [func \(pc ProviderConfigMap\) Set\(providerName string, keyValues ...string\)](<#ProviderConfigMap.Set>)
 - [type ProviderKeyValues](<#ProviderKeyValues>)
 - [type User](<#User>)
   - [func Complete\(e echo.Context, opts ...Options\) \(User, error\)](<#Complete>)
@@ -155,38 +155,38 @@ func WithLogger(logger *log.Logger) Options
 
 WithLogger sets the logger for the oauth package.
 
-<a name="ProviderConfig"></a>
-## type [ProviderConfig](<https://github.com/agentstation/oauth/blob/master/providers.go#L18>)
+<a name="ProviderConfigMap"></a>
+## type [ProviderConfigMap](<https://github.com/agentstation/oauth/blob/master/providers.go#L18>)
 
-ProviderConfig is a map of provider configurations.
+ProviderConfigMap is a map of providers to configuration key values.
 
 ```go
-type ProviderConfig map[string]ProviderKeyValues
+type ProviderConfigMap map[string]ProviderKeyValues
 ```
 
-<a name="NewProviderConfig"></a>
-### func [NewProviderConfig](<https://github.com/agentstation/oauth/blob/master/providers.go#L21>)
+<a name="NewProviderConfigMap"></a>
+### func [NewProviderConfigMap](<https://github.com/agentstation/oauth/blob/master/providers.go#L21>)
 
 ```go
-func NewProviderConfig() ProviderConfig
+func NewProviderConfigMap() ProviderConfigMap
 ```
 
-NewProviderConfig creates a new provider configuration.
+NewProviderConfigMap creates a new provider configuration map.
 
-<a name="ProviderConfig.Get"></a>
-### func \(ProviderConfig\) [Get](<https://github.com/agentstation/oauth/blob/master/providers.go#L31>)
+<a name="ProviderConfigMap.Get"></a>
+### func \(ProviderConfigMap\) [Get](<https://github.com/agentstation/oauth/blob/master/providers.go#L31>)
 
 ```go
-func (pc ProviderConfig) Get(providerName string) ProviderKeyValues
+func (pc ProviderConfigMap) Get(providerName string) ProviderKeyValues
 ```
 
 Get returns the ProviderKeyValues for the given provider name.
 
-<a name="ProviderConfig.Set"></a>
-### func \(ProviderConfig\) [Set](<https://github.com/agentstation/oauth/blob/master/providers.go#L26>)
+<a name="ProviderConfigMap.Set"></a>
+### func \(ProviderConfigMap\) [Set](<https://github.com/agentstation/oauth/blob/master/providers.go#L26>)
 
 ```go
-func (pc ProviderConfig) Set(providerName string, keyValues ...string)
+func (pc ProviderConfigMap) Set(providerName string, keyValues ...string)
 ```
 
 Set sets the ProviderKeyValues for the given provider name.
