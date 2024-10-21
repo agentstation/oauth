@@ -29,6 +29,11 @@ import "github.com/agentstation/oauth"
 - [type Options](<#Options>)
   - [func WithDebug\(\) Options](<#WithDebug>)
   - [func WithLogger\(logger \*log.Logger\) Options](<#WithLogger>)
+- [type ProviderConfig](<#ProviderConfig>)
+  - [func NewProviderConfig\(\) ProviderConfig](<#NewProviderConfig>)
+  - [func \(pc ProviderConfig\) Get\(providerName string\) ProviderKeyValues](<#ProviderConfig.Get>)
+  - [func \(pc ProviderConfig\) Set\(providerName string, keyValues ...string\)](<#ProviderConfig.Set>)
+- [type ProviderKeyValues](<#ProviderKeyValues>)
 - [type User](<#User>)
   - [func Complete\(e echo.Context, opts ...Options\) \(User, error\)](<#Complete>)
   - [func \(u \*User\) Validate\(\) error](<#User.Validate>)
@@ -149,6 +154,51 @@ func WithLogger(logger *log.Logger) Options
 ```
 
 WithLogger sets the logger for the oauth package.
+
+<a name="ProviderConfig"></a>
+## type [ProviderConfig](<https://github.com/agentstation/oauth/blob/master/providers.go#L18>)
+
+ProviderConfig is a map of provider configurations.
+
+```go
+type ProviderConfig map[string]ProviderKeyValues
+```
+
+<a name="NewProviderConfig"></a>
+### func [NewProviderConfig](<https://github.com/agentstation/oauth/blob/master/providers.go#L21>)
+
+```go
+func NewProviderConfig() ProviderConfig
+```
+
+NewProviderConfig creates a new provider configuration.
+
+<a name="ProviderConfig.Get"></a>
+### func \(ProviderConfig\) [Get](<https://github.com/agentstation/oauth/blob/master/providers.go#L31>)
+
+```go
+func (pc ProviderConfig) Get(providerName string) ProviderKeyValues
+```
+
+Get returns the ProviderKeyValues for the given provider name.
+
+<a name="ProviderConfig.Set"></a>
+### func \(ProviderConfig\) [Set](<https://github.com/agentstation/oauth/blob/master/providers.go#L26>)
+
+```go
+func (pc ProviderConfig) Set(providerName string, keyValues ...string)
+```
+
+Set sets the ProviderKeyValues for the given provider name.
+
+<a name="ProviderKeyValues"></a>
+## type [ProviderKeyValues](<https://github.com/agentstation/oauth/blob/master/providers.go#L15>)
+
+ProviderKeyValues is the configuration for a goth oauth provider.
+
+```go
+type ProviderKeyValues map[string]string
+```
 
 <a name="User"></a>
 ## type [User](<https://github.com/agentstation/oauth/blob/master/user.go#L11-L28>)
