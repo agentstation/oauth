@@ -27,13 +27,15 @@ func Store() sessions.Store {
 }
 
 // Begin starts the authentication process for a given provider.
-func Begin(e echo.Context) error {
-	return egothic.BeginAuthHandler(e)
+func Begin(e echo.Context, opts ...Options) error {
+	eGothicOpts := optionsToEgothicOptions(opts...)
+	return egothic.BeginAuthHandler(e, eGothicOpts...)
 }
 
 // Complete completes the authentication process and returns the user.
-func Complete(e echo.Context) (User, error) {
-	guser, err := egothic.CompleteUserAuth(e)
+func Complete(e echo.Context, opts ...Options) (User, error) {
+	eGothicOpts := optionsToEgothicOptions(opts...)
+	guser, err := egothic.CompleteUserAuth(e, eGothicOpts...)
 	if err != nil {
 		return User{}, err
 	}
@@ -59,8 +61,9 @@ func Complete(e echo.Context) (User, error) {
 }
 
 // ProviderURL returns the authentication URL for the specified provider.
-func ProviderURL(e echo.Context) (string, error) {
-	return egothic.GetAuthURL(e)
+func ProviderURL(e echo.Context, opts ...Options) (string, error) {
+	eGothicOpts := optionsToEgothicOptions(opts...)
+	return egothic.GetAuthURL(e, eGothicOpts...)
 }
 
 // SetSession stores a key/value pair in the session.

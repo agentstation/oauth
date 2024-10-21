@@ -18,16 +18,19 @@ import "github.com/agentstation/oauth"
 ## Index
 
 - [Variables](<#variables>)
-- [func Begin\(e echo.Context\) error](<#Begin>)
+- [func Begin\(e echo.Context, opts ...Options\) error](<#Begin>)
 - [func GetSession\(e echo.Context, key string\) \(string, error\)](<#GetSession>)
 - [func Logout\(e echo.Context\) error](<#Logout>)
-- [func ProviderURL\(e echo.Context\) \(string, error\)](<#ProviderURL>)
+- [func ProviderURL\(e echo.Context, opts ...Options\) \(string, error\)](<#ProviderURL>)
 - [func SetProviders\(providers ...goth.Provider\)](<#SetProviders>)
 - [func SetSession\(e echo.Context, key string, value string\) error](<#SetSession>)
 - [func SetStore\(store sessions.Store\)](<#SetStore>)
 - [func Store\(\) sessions.Store](<#Store>)
+- [type Options](<#Options>)
+  - [func WithDebug\(\) Options](<#WithDebug>)
+  - [func WithLogger\(logger \*log.Logger\) Options](<#WithLogger>)
 - [type User](<#User>)
-  - [func Complete\(e echo.Context\) \(User, error\)](<#Complete>)
+  - [func Complete\(e echo.Context, opts ...Options\) \(User, error\)](<#Complete>)
   - [func \(u \*User\) Validate\(\) error](<#User.Validate>)
 
 
@@ -50,13 +53,13 @@ var (
 ## func [Begin](<https://github.com/agentstation/oauth/blob/master/oauth.go#L30>)
 
 ```go
-func Begin(e echo.Context) error
+func Begin(e echo.Context, opts ...Options) error
 ```
 
 Begin starts the authentication process for a given provider.
 
 <a name="GetSession"></a>
-## func [GetSession](<https://github.com/agentstation/oauth/blob/master/oauth.go#L73>)
+## func [GetSession](<https://github.com/agentstation/oauth/blob/master/oauth.go#L76>)
 
 ```go
 func GetSession(e echo.Context, key string) (string, error)
@@ -65,7 +68,7 @@ func GetSession(e echo.Context, key string) (string, error)
 GetSession retrieves a value from the session by key. It returns an error if the key doesn't exist.
 
 <a name="Logout"></a>
-## func [Logout](<https://github.com/agentstation/oauth/blob/master/oauth.go#L78>)
+## func [Logout](<https://github.com/agentstation/oauth/blob/master/oauth.go#L81>)
 
 ```go
 func Logout(e echo.Context) error
@@ -74,10 +77,10 @@ func Logout(e echo.Context) error
 Logout invalidates a user session.
 
 <a name="ProviderURL"></a>
-## func [ProviderURL](<https://github.com/agentstation/oauth/blob/master/oauth.go#L62>)
+## func [ProviderURL](<https://github.com/agentstation/oauth/blob/master/oauth.go#L64>)
 
 ```go
-func ProviderURL(e echo.Context) (string, error)
+func ProviderURL(e echo.Context, opts ...Options) (string, error)
 ```
 
 ProviderURL returns the authentication URL for the specified provider.
@@ -94,7 +97,7 @@ SetProviders sets the goth oauth providers.
 You can find the list of supported providers here: https://github.com/markbates/goth?tab=readme-ov-file#supported-providers
 
 <a name="SetSession"></a>
-## func [SetSession](<https://github.com/agentstation/oauth/blob/master/oauth.go#L67>)
+## func [SetSession](<https://github.com/agentstation/oauth/blob/master/oauth.go#L70>)
 
 ```go
 func SetSession(e echo.Context, key string, value string) error
@@ -119,6 +122,33 @@ func Store() sessions.Store
 ```
 
 Store returns the store for the oauth session.
+
+<a name="Options"></a>
+## type [Options](<https://github.com/agentstation/oauth/blob/master/options.go#L10>)
+
+Options is a function that configures the oauth package.
+
+```go
+type Options func(*oauthConfig)
+```
+
+<a name="WithDebug"></a>
+### func [WithDebug](<https://github.com/agentstation/oauth/blob/master/options.go#L46>)
+
+```go
+func WithDebug() Options
+```
+
+WithDebug sets the debug mode for the oauth package.
+
+<a name="WithLogger"></a>
+### func [WithLogger](<https://github.com/agentstation/oauth/blob/master/options.go#L53>)
+
+```go
+func WithLogger(logger *log.Logger) Options
+```
+
+WithLogger sets the logger for the oauth package.
 
 <a name="User"></a>
 ## type [User](<https://github.com/agentstation/oauth/blob/master/user.go#L11-L28>)
@@ -147,10 +177,10 @@ type User struct {
 ```
 
 <a name="Complete"></a>
-### func [Complete](<https://github.com/agentstation/oauth/blob/master/oauth.go#L35>)
+### func [Complete](<https://github.com/agentstation/oauth/blob/master/oauth.go#L36>)
 
 ```go
-func Complete(e echo.Context) (User, error)
+func Complete(e echo.Context, opts ...Options) (User, error)
 ```
 
 Complete completes the authentication process and returns the user.
