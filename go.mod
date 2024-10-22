@@ -3,7 +3,7 @@ module github.com/agentstation/oauth
 go 1.23.1
 
 require (
-	github.com/agentstation/egothic v0.0.0-20241022032140-1b1e789bff1c
+	github.com/agentstation/egothic v0.0.0-20241022054342-cca78ac2d709
 	github.com/gorilla/sessions v1.4.0
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/markbates/goth v1.80.0

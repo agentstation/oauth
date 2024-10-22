@@ -1,5 +1,5 @@
-github.com/agentstation/egothic v0.0.0-20241022032140-1b1e789bff1c h1:zrwYQfPXbtEBlbeDpX0C9sJlyE2Xg1vB1ASYC4J1+RU=
-github.com/agentstation/egothic v0.0.0-20241022032140-1b1e789bff1c/go.mod h1:nlJV9a4u/qHShBQWj0OPJQjNstcuCmNSkxDFdI5+mME=
+github.com/agentstation/egothic v0.0.0-20241022054342-cca78ac2d709 h1:+N4LxU6XgGC0FW+gBMxJBiFW8eptShYn/DlvL9KzJsw=
+github.com/agentstation/egothic v0.0.0-20241022054342-cca78ac2d709/go.mod h1:aFEoLkb9cGgUZUKnctboqxxxOa/6LdJAcMQRFNHIeLs=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
