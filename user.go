@@ -33,15 +33,60 @@ func (u *User) Validate() error {
 		return errors.New("email not found")
 	}
 
-	if u.Name != "" && (u.FirstName == "" || u.LastName == "") {
-		parsedName := names.ParseFullName(u.Name)
+	if u.FirstName != "" {
+		return nil
+	}
+
+	u.setFirstAndLastName()
+	return nil
+}
+
+// setFirstAndLastName attempts to set the first and last name using available information
+// in the following priority order: full name parsing, nickname, full name, email
+func (u *User) setFirstAndLastName() {
+	if u.tryParseFullName() {
+		return
+	}
+
+	u.useEmailAsFirstName()
+}
+
+func (u *User) tryParseFullName() bool {
+	if u.Name == "" {
+		return false
+	}
+
+	parsedName := names.ParseFullName(u.Name)
+
+	if parsedName.First != "" {
 		u.FirstName = parsedName.First
+	} else {
+		if !u.tryUseNickname() {
+			u.FirstName = u.Name
+		}
+	}
+
+	if u.LastName == "" && parsedName.Last != "" && parsedName.Last != u.FirstName {
 		u.LastName = parsedName.Last
 	}
 
-	if u.FirstName == "" {
-		return errors.New("first name not found")
+	return u.FirstName != ""
+}
+
+func (u *User) tryUseNickname() bool {
+	if u.NickName == "" {
+		return false
 	}
 
-	return nil
+	// if the nickname is shorter than the name, use it as the first name
+	if len(u.NickName) < len(u.Name) {
+		u.FirstName = u.NickName
+		return true
+	}
+
+	return false
+}
+
+func (u *User) useEmailAsFirstName() {
+	u.FirstName = u.Email
 }
