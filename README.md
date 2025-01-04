@@ -65,7 +65,7 @@ func Begin(e echo.Context, opts ...Options) error
 Begin starts the authentication process for a given provider.
 
 <a name="GetSession"></a>
-## func [GetSession](<https://github.com/agentstation/oauth/blob/master/oauth.go#L76>)
+## func [GetSession](<https://github.com/agentstation/oauth/blob/master/oauth.go#L84>)
 
 ```go
 func GetSession(e echo.Context, key string) (string, error)
@@ -74,7 +74,7 @@ func GetSession(e echo.Context, key string) (string, error)
 GetSession retrieves a value from the session by key. It returns an error if the key doesn't exist.
 
 <a name="Logout"></a>
-## func [Logout](<https://github.com/agentstation/oauth/blob/master/oauth.go#L81>)
+## func [Logout](<https://github.com/agentstation/oauth/blob/master/oauth.go#L89>)
 
 ```go
 func Logout(e echo.Context) error
@@ -83,7 +83,7 @@ func Logout(e echo.Context) error
 Logout invalidates a user session.
 
 <a name="ProviderURL"></a>
-## func [ProviderURL](<https://github.com/agentstation/oauth/blob/master/oauth.go#L64>)
+## func [ProviderURL](<https://github.com/agentstation/oauth/blob/master/oauth.go#L72>)
 
 ```go
 func ProviderURL(e echo.Context, opts ...Options) (string, error)
@@ -103,7 +103,7 @@ SetProviders sets the goth oauth providers.
 You can find the list of supported providers here: https://github.com/markbates/goth?tab=readme-ov-file#supported-providers
 
 <a name="SetSession"></a>
-## func [SetSession](<https://github.com/agentstation/oauth/blob/master/oauth.go#L70>)
+## func [SetSession](<https://github.com/agentstation/oauth/blob/master/oauth.go#L78>)
 
 ```go
 func SetSession(e echo.Context, key string, value string) error

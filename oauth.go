@@ -39,6 +39,8 @@ func Complete(e echo.Context, opts ...Options) (User, error) {
 	if err != nil {
 		return User{}, err
 	}
+
+	// create a new oauth user from the goth user
 	user := User{
 		RawData:           guser.RawData,
 		Provider:          guser.Provider,
@@ -57,6 +59,12 @@ func Complete(e echo.Context, opts ...Options) (User, error) {
 		ExpiresAt:         guser.ExpiresAt,
 		IDToken:           guser.IDToken,
 	}
+
+	// validate that what we got back from the provider is usable
+	if err := user.Validate(); err != nil {
+		return User{}, err
+	}
+
 	return user, nil
 }
 
